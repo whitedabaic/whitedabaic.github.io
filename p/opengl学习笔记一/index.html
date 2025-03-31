@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 <html lang="zh-cn" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="这是一个副标题">
-<title>Chinese Test</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="OpenGL">
+<title>OpenGL学习笔记（一）</title>
 
-<link rel='canonical' href='https://whitedabaic.github.io/p/test-chinese/'>
+<link rel='canonical' href='https://whitedabaic.github.io/p/opengl%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80/'>
 
-<link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="Chinese Test">
-<meta property='og:description' content="这是一个副标题">
-<meta property='og:url' content='https://whitedabaic.github.io/p/test-chinese/'>
+<link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="OpenGL学习笔记（一）">
+<meta property='og:description' content="OpenGL">
+<meta property='og:url' content='https://whitedabaic.github.io/p/opengl%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80/'>
 <meta property='og:site_name' content='开摆教科书'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2020-09-09T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2020-09-09T00:00:00&#43;00:00'/><meta property='og:image' content='https://whitedabaic.github.io/p/test-chinese/helena-hertz-wWZzXlDpMog-unsplash.jpg' />
-<meta name="twitter:title" content="Chinese Test">
-<meta name="twitter:description" content="这是一个副标题"><meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content='https://whitedabaic.github.io/p/test-chinese/helena-hertz-wWZzXlDpMog-unsplash.jpg' />
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-03-31T18:41:47&#43;08:00'/><meta property='article:modified_time' content='2025-03-31T18:41:47&#43;08:00'/>
+<meta name="twitter:title" content="OpenGL学习笔记（一）">
+<meta name="twitter:description" content="OpenGL">
     <link rel="shortcut icon" href="/favicon.ico" />
 
     </head>
@@ -248,9 +247,18 @@
         <div class="widget--toc">
             <nav id="TableOfContents">
   <ol>
-    <li><a href="#正文测试">正文测试</a></li>
-    <li><a href="#引用">引用</a></li>
-    <li><a href="#图片">图片</a></li>
+    <li><a href="#opengl总览">OpenGL总览</a></li>
+    <li><a href="#gultfreeglutglewglfwglad的联系与区别">gult/freeglut/glew/glfw/glad的联系与区别</a>
+      <ol>
+        <li><a href="#1glut">1.glut</a></li>
+        <li><a href="#2freeglut">2.freeglut</a></li>
+        <li><a href="#3glew">3.glew</a></li>
+        <li><a href="#4glfw">4.glfw</a></li>
+        <li><a href="#5glad">5.glad</a></li>
+      </ol>
+    </li>
+    <li><a href="#结论与项目使用">结论与项目使用</a></li>
+    <li><a href="#参考文献">参考文献</a></li>
   </ol>
 </nav>
         </div>
@@ -262,31 +270,19 @@
 
 
             <main class="main full-width">
-    <article class="has-image main-article">
+    <article class="main-article">
     <header class="article-header">
-        <div class="article-image">
-            <a href="/p/test-chinese/">
-                <img src="/p/test-chinese/helena-hertz-wWZzXlDpMog-unsplash_hu_e5aaa5f0b7bd07e9.jpg"
-                        srcset="/p/test-chinese/helena-hertz-wWZzXlDpMog-unsplash_hu_e5aaa5f0b7bd07e9.jpg 800w, /p/test-chinese/helena-hertz-wWZzXlDpMog-unsplash_hu_c99ba9c80ceee4b3.jpg 1600w"
-                        width="800" 
-                        height="600" 
-                        loading="lazy"
-                        alt="Featured image of post Chinese Test" />
-                
-            </a>
-        </div>
-    
 
     <div class="article-details">
     
     <header class="article-category">
         
-            <a href="/categories/test/" style="background-color: #2a9d8f; color: #fff;">
-                Test
+            <a href="/categories/opengl/" >
+                OpenGL
             </a>
         
-            <a href="/categories/%E6%B5%8B%E8%AF%95/" >
-                测试
+            <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/" >
+                计算机图形学
             </a>
         
     </header>
@@ -294,12 +290,12 @@
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
-            <a href="/p/test-chinese/">Chinese Test</a>
+            <a href="/p/opengl%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80/">OpenGL学习笔记（一）</a>
         </h2>
     
         
         <h3 class="article-subtitle">
-            这是一个副标题
+            OpenGL
         </h3>
         
     </div>
@@ -320,7 +316,7 @@
   <path d="M3 11h16" />
   <path d="M18 16.496v1.504l1 1" />
 </svg>
-                <time class="article-time--published">2020-09-09</time>
+                <time class="article-time--published">2025-03-31</time>
             </div>
         
 
@@ -336,86 +332,70 @@
     <section class="article-content">
     
     
-    <h2 id="正文测试">正文测试
-</h2><p>而这些并不是完全重要，更加重要的问题是， 带着这些问题，我们来审视一下学生会退会。 既然如何， 对我个人而言，学生会退会不仅仅是一个重大的事件，还可能会改变我的人生。 我们不得不面对一个非常尴尬的事实，那就是， 可是，即使是这样，学生会退会的出现仍然代表了一定的意义。 学生会退会，发生了会如何，不发生又会如何。 经过上述讨论， 生活中，若学生会退会出现了，我们就不得不考虑它出现了的事实。 学生会退会，到底应该如何实现。 这样看来， 在这种困难的抉择下，本人思来想去，寝食难安。 对我个人而言，学生会退会不仅仅是一个重大的事件，还可能会改变我的人生。 就我个人来说，学生会退会对我的意义，不能不说非常重大。 莎士比亚曾经提到过，人的一生是短的，但如果卑劣地过这一生，就太长了。这似乎解答了我的疑惑。 莫扎特说过一句富有哲理的话，谁和我一样用功，谁就会和我一样成功。这启发了我， 对我个人而言，学生会退会不仅仅是一个重大的事件，还可能会改变我的人生。 学生会退会，到底应该如何实现。 一般来说， 从这个角度来看， 这种事实对本人来说意义重大，相信对这个世界也是有一定意义的。 在这种困难的抉择下，本人思来想去，寝食难安。 了解清楚学生会退会到底是一种怎么样的存在，是解决一切问题的关键。 一般来说， 生活中，若学生会退会出现了，我们就不得不考虑它出现了的事实。 问题的关键究竟为何？ 而这些并不是完全重要，更加重要的问题是。</p>
-<p>奥斯特洛夫斯基曾经说过，共同的事业，共同的斗争，可以使人们产生忍受一切的力量。　带着这句话，我们还要更加慎重的审视这个问题： 一般来讲，我们都必须务必慎重的考虑考虑。 既然如此， 这种事实对本人来说意义重大，相信对这个世界也是有一定意义的。 带着这些问题，我们来审视一下学生会退会。 我认为， 我认为， 在这种困难的抉择下，本人思来想去，寝食难安。 问题的关键究竟为何？ 每个人都不得不面对这些问题。 在面对这种问题时， 要想清楚，学生会退会，到底是一种怎么样的存在。 我认为， 既然如此， 每个人都不得不面对这些问题。 在面对这种问题时， 那么， 我认为， 学生会退会因何而发生。</p>
-<h2 id="引用">引用
-</h2><blockquote>
-<p>思念是最暖的忧伤像一双翅膀<br>
-让我停不了飞不远在过往游荡<br>
-不告而别的你 就算为了我着想<br>
-这么沉痛的呵护 我怎么能翱翔</p>
-<p><em><a class="link" href="https://www.youtube.com/watch?v=3aypp_YlBzI"  target="_blank" rel="noopener"
-    >最暖的憂傷 - 田馥甄</a></em></p></blockquote>
-<h2 id="图片">图片
-</h2><p><img src="/p/test-chinese/florian-klauer-nptLmg6jqDo-unsplash.jpg"
-	width="667"
-	height="1000"
-	srcset="/p/test-chinese/florian-klauer-nptLmg6jqDo-unsplash_hu_e98fca2b4272416e.jpg 480w, /p/test-chinese/florian-klauer-nptLmg6jqDo-unsplash_hu_e3d37c9ded115b12.jpg 1024w"
+    <h2 id="opengl总览">OpenGL总览
+</h2><p>OpenGL只有框架没有实现，换句话说就是OpenGL只有函数声明没有源文件实现，类似于接口和虚函数。所有的实现是显卡生产商提供。比如NVIDIA或者AMD就要自己实现OpenGL函数内容，所以不同的生产商可以对自己的产品提供优化，毕竟代码是自己写的。</p>
+<p>OpenGL函数库相关的API有核心库(gl)，实用库(glu)，辅助库(aux)、实用工具库(glut)，窗口库(glx、agl、wgl)和扩展函数库等。gl是核心，glu是对gl的部分封装。glx、agl、wgl 是针对不同窗口系统的函数。glut是为跨平台的OpenGL程序的工具包，比aux功能强大（aux很大程度上已经被glut库取代）。扩展函数库是硬件厂商为实现硬件更新利用OpenGL的扩展机制开发的函数。</p>
+<h2 id="gultfreeglutglewglfwglad的联系与区别">gult/freeglut/glew/glfw/glad的联系与区别
+</h2><h3 id="1glut">1.glut
+</h3><p><a class="link" href="https://www.opengl.org/resources/libraries/glut/glut_downloads.php"  target="_blank" rel="noopener"
+    >OpenGL Utility Toolkit</a></p>
+<p>里面有32位的库文件下载，glutdlls37beta.zip，但是版本太老了，理应被时代淘汰，不推荐使用。gult最后版本v3.7beta的历史可追溯至1998年8月，且该项目已经被废弃。它的许可证禁止任何人发布修改后的库代码。</p>
+<p>这部分函数以glut开头，主要包括窗口操作函数，窗口初始化、窗口大小、窗口位置等函数；回调函数：响应刷新消息、键盘消息、鼠标消息、定时器函数等；创建复杂的三维物体；菜单函数；程序运行函数。gult对应的开源实现是freegult。</p>
+<h3 id="2freeglut">2.freeglut
+</h3><p><a class="link" href="http://freeglut.sourceforge.net/"  target="_blank" rel="noopener"
+    >FreeGLUT is a free-software/open-source alternative to the OpenGL Utility Toolkit (GLUT) library</a></p>
+<p>因为OpenGL没有窗口管理的功能，所以很多热心的人写了工具来支持这些功能，比如早期的glut，现在的freeglut等。</p>
+<p>freeglut完全兼容glut，是glut的代替品，开源，功能齐全。目前来看，freeglut 3.0版本比其它版本稳定，推荐使用。帕维尔在1999年12月1日开始freeglut的开发。目前，该项目几乎可以100%的替代原来的GLUT，只有少数差别（如，the abandonment of SGI-specific features，按钮盒子和动态视频分辨率）和 其他一小部分程序Bug。</p>
+<h3 id="3glew">3.glew
+</h3><p><a class="link" href="http://glew.sourceforge.net/"  target="_blank" rel="noopener"
+    >The OpenGL Extension Wrangler Library</a></p>
+<p>glut或者freegult主要是OpenGL 1.0的基本函数功能；glew是使用OpenGL 2.0之后的一个工具函数。</p>
+<p>不同的显卡公司，也会发布一些只有自家显卡才支持的扩展函数，你要想用这数涵数，不得不去寻找最新的glext.h,有了GLEW扩展库，你就再也不用为找不到函数的接口而烦恼，因为GLEW能自动识别你的平台所支持的全部OpenGL高级扩展函数。也就是说，只要包含一个glew.h头文件，你就能使用gl,glu,glext,wgl,glx的全部函数。</p>
+<p>glew包含了OpenGL所需的核心。前面已经说过openGL的实现是显卡生产商，那么系统如何才能找到这些实现好的函数呢？而且不同的平台函数存放地方还不同，文件结构也不同。有没有一种方式能够自动找到OpenGL的函数？这就是glew的作用：用来找openGL的函数，并初始化，这样我们就能直接调用OpenGL的函数了。</p>
+<h3 id="4glfw">4.glfw
+</h3><p><a class="link" href="https://www.glfw.org/"  target="_blank" rel="noopener"
+    >glfw is an Open Source, multi-platform library for OpenGL, OpenGL ES and Vulkan development on the desktop. It provides a simple API for creating windows, contexts and surfaces, receiving input and events.</a></p>
+<p>glfw无愧于其号称的lightweight的OpenGL框架，的确是除了跨平台必要做的事情都没有做，所以一个头文件，很少量的API，就完成了任务。glfw的开发目的是用于替代glut的。它是一个轻量级的，开源的，跨平台的library。支持OpenGL及OpenGL ES，用来管理窗口，读取输入，处理事件等。</p>
+<p>那么glfw有何优势呢？glut太老了，最后一个版本还是90年代的。freeglut完全兼容glut，算是glut的代替品，功能齐全，但是bug太多。稳定性也不好（不是我说的啊），glfw应运而生。</p>
+<p>总之，glfw是glut/freegult的升级和改进。glfw是用来显示窗口和捕捉窗口事件的一套API，可以理解成Qt和windows平台的WPF。OpenGL只是一套控制GPU的规则，并没有对于跨平台窗口显示和事件进行规定，所以需要一个显示显卡渲染的窗口，这就是glfw的作用。</p>
+<h3 id="5glad">5.glad
+</h3><p><a class="link" href="https://glad.dav1d.de/"  target="_blank" rel="noopener"
+    >Multi-Language GL/GLES/EGL/GLX/WGL Loader-Generator</a></p>
+<p>glad是继gl3w，glew之后，当前最新的用来访问OpenGL规范接口的第三方库。简单说glad是glew的升级版，就是说glew比较老，glad比较新。</p>
+<h2 id="结论与项目使用">结论与项目使用
+</h2><p>窗口管理
+老产品：glut/freeglut
+替代品：glfw</p>
+<p>函数加载
+老产品：glew
+替代品：glad</p>
+<p>项目开发，通常有三种组合</p>
+<ol>
+<li>
+<p>freeglut+glew</p>
+</li>
+<li>
+<p>glfw+glew</p>
+</li>
+<li>
+<p>glfw+glad</p>
+</li>
+</ol>
+<p><img src="/p/opengl%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80/opengl.jpg"
+	width="1289"
+	height="1130"
+	srcset="/p/opengl%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80/opengl_hu_104ce5368136d67f.jpg 480w, /p/opengl%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80/opengl_hu_dda83c5ee3a4473a.jpg 1024w"
 	loading="lazy"
-	
-		alt="Photo by Florian Klauer on Unsplash"
 	
 	
 		class="gallery-image" 
-		data-flex-grow="66"
-		data-flex-basis="160px"
-	
->  <img src="/p/test-chinese/luca-bravo-alS7ewQ41M8-unsplash.jpg"
-	width="1000"
-	height="667"
-	srcset="/p/test-chinese/luca-bravo-alS7ewQ41M8-unsplash_hu_e13c58d5189f892c.jpg 480w, /p/test-chinese/luca-bravo-alS7ewQ41M8-unsplash_hu_8fc948b7ee525251.jpg 1024w"
-	loading="lazy"
-	
-		alt="Photo by Luca Bravo on Unsplash"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="149"
-		data-flex-basis="359px"
+		data-flex-grow="114"
+		data-flex-basis="273px"
 	
 ></p>
-<p><img src="/p/test-chinese/helena-hertz-wWZzXlDpMog-unsplash.jpg"
-	width="1000"
-	height="750"
-	srcset="/p/test-chinese/helena-hertz-wWZzXlDpMog-unsplash_hu_503c0ebcc5245e10.jpg 480w, /p/test-chinese/helena-hertz-wWZzXlDpMog-unsplash_hu_48c98de55fb3c999.jpg 1024w"
-	loading="lazy"
-	
-		alt="Photo by Helena Hertz on Unsplash"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="133"
-		data-flex-basis="320px"
-	
->  <img src="/p/test-chinese/hudai-gayiran-3Od_VKcDEAA-unsplash.jpg"
-	width="667"
-	height="1000"
-	srcset="/p/test-chinese/hudai-gayiran-3Od_VKcDEAA-unsplash_hu_f81a3588c5c4a663.jpg 480w, /p/test-chinese/hudai-gayiran-3Od_VKcDEAA-unsplash_hu_1c52ba2a4ad7b9a0.jpg 1024w"
-	loading="lazy"
-	
-		alt="Photo by Hudai Gayiran on Unsplash"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="66"
-		data-flex-basis="160px"
-	
-></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-markdown" data-lang="markdown"><span class="line"><span class="cl">![<span class="nt">Photo by Florian Klauer on Unsplash</span>](<span class="na">florian-klauer-nptLmg6jqDo-unsplash.jpg</span>)  ![<span class="nt">Photo by Luca Bravo on Unsplash</span>](<span class="na">luca-bravo-alS7ewQ41M8-unsplash.jpg</span>) 
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">![<span class="nt">Photo by Helena Hertz on Unsplash</span>](<span class="na">helena-hertz-wWZzXlDpMog-unsplash.jpg</span>)  ![<span class="nt">Photo by Hudai Gayiran on Unsplash</span>](<span class="na">hudai-gayiran-3Od_VKcDEAA-unsplash.jpg</span>)
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>相册语法来自 <a class="link" href="https://typlog.com/"  target="_blank" rel="noopener"
-    >Typlog</a></p>
+<h2 id="参考文献">参考文献
+</h2><p><a class="link" href="https://blog.csdn.net/qq_38446366/article/details/115328051"  target="_blank" rel="noopener"
+    >OpenGL之gult/freeglut/glew/glfw/glad的联系与区别</a></p>
 
 </section>
 
@@ -439,48 +419,13 @@
         <div class="flex article-list--tile">
             
                 
-<article class="has-image">
-    <a href="/p/placeholder-text/">
+<article class="">
+    <a href="/p/opengl%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%BA%8C/">
         
-        
-            <div class="article-image">
-                <img src="/p/placeholder-text/matt-le-SJSpo9hQf7s-unsplash.8eae06664ddfb3e8dc6e000756cb703b_hu_cc847465c05fc251.jpg" 
-                        width="250" 
-                        height="150" 
-                        loading="lazy"
-                        alt="Featured image of post Placeholder Text"
-                        
-                        data-hash="md5-jq4GZk3fs&#43;jcbgAHVstwOw==">
-                
-            </div>
         
 
         <div class="article-details">
-            <h2 class="article-title">Placeholder Text</h2>
-        </div>
-    </a>
-</article>
-
-            
-                
-<article class="has-image">
-    <a href="/p/emoji-support/">
-        
-        
-            <div class="article-image">
-                <img src="/p/emoji-support/the-creative-exchange-d2zvqp3fpro-unsplash.60116b1ccfc8632e9a65f7d51df3efc2_hu_c1cfd6b8275d624a.jpg" 
-                        width="250" 
-                        height="150" 
-                        loading="lazy"
-                        alt="Featured image of post Emoji Support"
-                        
-                        data-hash="md5-YBFrHM/IYy6aZffVHfPvwg==">
-                
-            </div>
-        
-
-        <div class="article-details">
-            <h2 class="article-title">Emoji Support</h2>
+            <h2 class="article-title">OpenGL学习笔记（二）</h2>
         </div>
     </a>
 </article>

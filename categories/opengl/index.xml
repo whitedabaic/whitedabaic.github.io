@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>OpenGL on 开摆教科书</title>
+        <link>https://whitedabaic.github.io/categories/opengl/</link>
+        <description>Recent content in OpenGL on 开摆教科书</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-cn</language>
+        <copyright>开摆教科书</copyright>
+        <lastBuildDate>Mon, 31 Mar 2025 21:13:25 +0800</lastBuildDate><atom:link href="https://whitedabaic.github.io/categories/opengl/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>OpenGL学习笔记（二）</title>
+        <link>https://whitedabaic.github.io/p/opengl%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%BA%8C/</link>
+        <pubDate>Mon, 31 Mar 2025 21:13:25 +0800</pubDate>
+        
+        <guid>https://whitedabaic.github.io/p/opengl%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%BA%8C/</guid>
+        <description>&lt;h2 id=&#34;创建窗口&#34;&gt;创建窗口
+&lt;/h2&gt;&lt;p&gt;在我们画出出色的效果之前，首先要做的就是创建一个OpenGL上下文(Context)和一个用于显示的窗口。然而，这些操作在每个系统上都是不一样的，OpenGL有目的地从这些操作抽象(Abstract)出去。这意味着我们不得不自己处理创建窗口，定义OpenGL上下文以及处理用户输入。&lt;/p&gt;
+&lt;h3 id=&#34;前期准备&#34;&gt;前期准备
+&lt;/h3&gt;&lt;p&gt;本次学习使用VS2022 IDE，GLFW3.4，GLAD4.6&lt;/p&gt;
+&lt;h4 id=&#34;glfw&#34;&gt;GLFW
+&lt;/h4&gt;&lt;p&gt;GLFW是一个专门针对OpenGL的C语言库，它提供了一些渲染物体所需的最低限度的接口。它允许用户创建OpenGL上下文，定义窗口参数以及处理用户输入，这正是我们需要的。&lt;/p&gt;
+&lt;p&gt;在&lt;a class=&#34;link&#34; href=&#34;https://www.glfw.org/download.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;GLFW官网&lt;/a&gt;下载源码包，用CMake创建GLFW工程文件，然后编译它，在&lt;code&gt;src/Debug&lt;/code&gt;文件内可以找到编译的库&lt;strong&gt;glfw3.lib&lt;/strong&gt;。&lt;/p&gt;
+&lt;h4 id=&#34;glad&#34;&gt;GLAD
+&lt;/h4&gt;&lt;p&gt;到这里还没有结束，我们仍然还有一件事要做。因为OpenGL只是一个标准/规范，具体的实现是由驱动开发商针对特定显卡实现的。由于OpenGL驱动版本众多，它大多数函数的位置都无法在编译时确定下来，需要在运行时查询。所以任务就落在了开发者身上，开发者需要在运行时获取函数地址并将其保存在一个函数指针中供以后使用。取得地址的方法因平台而异，在Windows上会是类似这样：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// 定义函数原型
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;typedef&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;GL_GENBUFFERS&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;GLsizei&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;GLuint&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// 找到正确的函数并赋值给函数指针
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;GL_GENBUFFERS&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;glGenBuffers&lt;/span&gt;  &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;GL_GENBUFFERS&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;wglGetProcAddress&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;glGenBuffers&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// 现在函数可以被正常调用了
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;GLuint&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;buffer&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;glGenBuffers&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;buffer&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;你可以看到代码非常复杂，而且很繁琐，我们需要对每个可能使用的函数都要重复这个过程。幸运的是，有些库能简化此过程，其中GLAD是目前最新，也是最流行的库。&lt;/p&gt;
+&lt;p&gt;打开&lt;a class=&#34;link&#34; href=&#34;https://glad.dav1d.de/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;GLAD官网&lt;/a&gt;下载glad.zip解压后获得include文件夹和src文件夹。&lt;/p&gt;
+&lt;h3 id=&#34;创建vs工程并进行链接&#34;&gt;创建VS工程并进行链接
+&lt;/h3&gt;&lt;p&gt;创建一个空项目，创建vendor文件夹，将Glad和GLFW的include文件以及lib放进去，进入Project Properties(工程属性，在解决方案窗口里右键项目)，然后选择VC++ Directories(VC++ 目录)选项卡。
+&lt;img src=&#34;https://whitedabaic.github.io/p/opengl%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%BA%8C/include.png&#34;
+	width=&#34;1714&#34;
+	height=&#34;801&#34;
+	srcset=&#34;https://whitedabaic.github.io/p/opengl%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%BA%8C/include_hu_7d89acbbf320738a.png 480w, https://whitedabaic.github.io/p/opengl%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%BA%8C/include_hu_9394f7f6a7ae50c9.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;213&#34;
+		data-flex-basis=&#34;513px&#34;
+	
+&gt;
+现在VS可以找到所需的所有文件了。然后需要在Linker(链接器)选项卡里的Input(输入)选项卡里添加glfw3.lib和opengl32.lib这个文件：
+&lt;img src=&#34;https://whitedabaic.github.io/p/opengl%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%BA%8C/lib.png&#34;
+	width=&#34;1168&#34;
+	height=&#34;804&#34;
+	srcset=&#34;https://whitedabaic.github.io/p/opengl%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%BA%8C/lib_hu_4cc86c74e88a2792.png 480w, https://whitedabaic.github.io/p/opengl%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%BA%8C/lib_hu_d18fd770973ed4b4.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;145&#34;
+		data-flex-basis=&#34;348px&#34;
+	
+&gt;
+最后将glad.c包括在项目中。&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>OpenGL学习笔记（一）</title>
+        <link>https://whitedabaic.github.io/p/opengl%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80/</link>
+        <pubDate>Mon, 31 Mar 2025 18:41:47 +0800</pubDate>
+        
+        <guid>https://whitedabaic.github.io/p/opengl%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80/</guid>
+        <description>&lt;h2 id=&#34;opengl总览&#34;&gt;OpenGL总览
+&lt;/h2&gt;&lt;p&gt;OpenGL只有框架没有实现，换句话说就是OpenGL只有函数声明没有源文件实现，类似于接口和虚函数。所有的实现是显卡生产商提供。比如NVIDIA或者AMD就要自己实现OpenGL函数内容，所以不同的生产商可以对自己的产品提供优化，毕竟代码是自己写的。&lt;/p&gt;
+&lt;p&gt;OpenGL函数库相关的API有核心库(gl)，实用库(glu)，辅助库(aux)、实用工具库(glut)，窗口库(glx、agl、wgl)和扩展函数库等。gl是核心，glu是对gl的部分封装。glx、agl、wgl 是针对不同窗口系统的函数。glut是为跨平台的OpenGL程序的工具包，比aux功能强大（aux很大程度上已经被glut库取代）。扩展函数库是硬件厂商为实现硬件更新利用OpenGL的扩展机制开发的函数。&lt;/p&gt;
+&lt;h2 id=&#34;gultfreeglutglewglfwglad的联系与区别&#34;&gt;gult/freeglut/glew/glfw/glad的联系与区别
+&lt;/h2&gt;&lt;h3 id=&#34;1glut&#34;&gt;1.glut
+&lt;/h3&gt;&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.opengl.org/resources/libraries/glut/glut_downloads.php&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;OpenGL Utility Toolkit&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;里面有32位的库文件下载，glutdlls37beta.zip，但是版本太老了，理应被时代淘汰，不推荐使用。gult最后版本v3.7beta的历史可追溯至1998年8月，且该项目已经被废弃。它的许可证禁止任何人发布修改后的库代码。&lt;/p&gt;
+&lt;p&gt;这部分函数以glut开头，主要包括窗口操作函数，窗口初始化、窗口大小、窗口位置等函数；回调函数：响应刷新消息、键盘消息、鼠标消息、定时器函数等；创建复杂的三维物体；菜单函数；程序运行函数。gult对应的开源实现是freegult。&lt;/p&gt;
+&lt;h3 id=&#34;2freeglut&#34;&gt;2.freeglut
+&lt;/h3&gt;&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;http://freeglut.sourceforge.net/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;FreeGLUT is a free-software/open-source alternative to the OpenGL Utility Toolkit (GLUT) library&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;因为OpenGL没有窗口管理的功能，所以很多热心的人写了工具来支持这些功能，比如早期的glut，现在的freeglut等。&lt;/p&gt;
+&lt;p&gt;freeglut完全兼容glut，是glut的代替品，开源，功能齐全。目前来看，freeglut 3.0版本比其它版本稳定，推荐使用。帕维尔在1999年12月1日开始freeglut的开发。目前，该项目几乎可以100%的替代原来的GLUT，只有少数差别（如，the abandonment of SGI-specific features，按钮盒子和动态视频分辨率）和 其他一小部分程序Bug。&lt;/p&gt;
+&lt;h3 id=&#34;3glew&#34;&gt;3.glew
+&lt;/h3&gt;&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;http://glew.sourceforge.net/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;The OpenGL Extension Wrangler Library&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;glut或者freegult主要是OpenGL 1.0的基本函数功能；glew是使用OpenGL 2.0之后的一个工具函数。&lt;/p&gt;
+&lt;p&gt;不同的显卡公司，也会发布一些只有自家显卡才支持的扩展函数，你要想用这数涵数，不得不去寻找最新的glext.h,有了GLEW扩展库，你就再也不用为找不到函数的接口而烦恼，因为GLEW能自动识别你的平台所支持的全部OpenGL高级扩展函数。也就是说，只要包含一个glew.h头文件，你就能使用gl,glu,glext,wgl,glx的全部函数。&lt;/p&gt;
+&lt;p&gt;glew包含了OpenGL所需的核心。前面已经说过openGL的实现是显卡生产商，那么系统如何才能找到这些实现好的函数呢？而且不同的平台函数存放地方还不同，文件结构也不同。有没有一种方式能够自动找到OpenGL的函数？这就是glew的作用：用来找openGL的函数，并初始化，这样我们就能直接调用OpenGL的函数了。&lt;/p&gt;
+&lt;h3 id=&#34;4glfw&#34;&gt;4.glfw
+&lt;/h3&gt;&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.glfw.org/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;glfw is an Open Source, multi-platform library for OpenGL, OpenGL ES and Vulkan development on the desktop. It provides a simple API for creating windows, contexts and surfaces, receiving input and events.&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;glfw无愧于其号称的lightweight的OpenGL框架，的确是除了跨平台必要做的事情都没有做，所以一个头文件，很少量的API，就完成了任务。glfw的开发目的是用于替代glut的。它是一个轻量级的，开源的，跨平台的library。支持OpenGL及OpenGL ES，用来管理窗口，读取输入，处理事件等。&lt;/p&gt;
+&lt;p&gt;那么glfw有何优势呢？glut太老了，最后一个版本还是90年代的。freeglut完全兼容glut，算是glut的代替品，功能齐全，但是bug太多。稳定性也不好（不是我说的啊），glfw应运而生。&lt;/p&gt;
+&lt;p&gt;总之，glfw是glut/freegult的升级和改进。glfw是用来显示窗口和捕捉窗口事件的一套API，可以理解成Qt和windows平台的WPF。OpenGL只是一套控制GPU的规则，并没有对于跨平台窗口显示和事件进行规定，所以需要一个显示显卡渲染的窗口，这就是glfw的作用。&lt;/p&gt;
+&lt;h3 id=&#34;5glad&#34;&gt;5.glad
+&lt;/h3&gt;&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://glad.dav1d.de/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Multi-Language GL/GLES/EGL/GLX/WGL Loader-Generator&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;glad是继gl3w，glew之后，当前最新的用来访问OpenGL规范接口的第三方库。简单说glad是glew的升级版，就是说glew比较老，glad比较新。&lt;/p&gt;
+&lt;h2 id=&#34;结论与项目使用&#34;&gt;结论与项目使用
+&lt;/h2&gt;&lt;p&gt;窗口管理
+老产品：glut/freeglut
+替代品：glfw&lt;/p&gt;
+&lt;p&gt;函数加载
+老产品：glew
+替代品：glad&lt;/p&gt;
+&lt;p&gt;项目开发，通常有三种组合&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;freeglut+glew&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;glfw+glew&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;glfw+glad&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&#34;https://whitedabaic.github.io/p/opengl%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80/opengl.jpg&#34;
+	width=&#34;1289&#34;
+	height=&#34;1130&#34;
+	srcset=&#34;https://whitedabaic.github.io/p/opengl%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80/opengl_hu_104ce5368136d67f.jpg 480w, https://whitedabaic.github.io/p/opengl%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80/opengl_hu_dda83c5ee3a4473a.jpg 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;114&#34;
+		data-flex-basis=&#34;273px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;参考文献&#34;&gt;参考文献
+&lt;/h2&gt;&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://blog.csdn.net/qq_38446366/article/details/115328051&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;OpenGL之gult/freeglut/glew/glfw/glad的联系与区别&lt;/a&gt;&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>
